@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Logs & Debug
+logs/
+*.log
+
+# Audio & Media Recordings
+recordings/
+
+# Databases
+*.db
+*.db-journal
+*.sqlite
+*.sqlite-journal
+
+# Environment & Secrets (Crucial: never commit credentials)
+.env
+.env.local
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.*
+landing/.env
+landing/.env.*
+
+# Build Outputs
+dist/
+build/
+.next/
+
+# IDE & OS
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+

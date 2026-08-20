@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NinaivuNet AI - Dashboard</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+  <!-- STEP 1: SIGN IN (identity only - no role picker, matches the doc:
+       "roles are not selected during registration") -->
+  <div id="login-screen" class="screen">
+    <div class="join-card">
+      <h1>NinaivuNet AI</h1>
+      <p class="subtitle">Sign in to see your projects</p>
+      <label>Your name</label>
+      <input id="loginName" type="text" placeholder="e.g. Santhosh" />
+      <button id="loginBtn">Continue</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: PICK A PROJECT (your role is looked up per-project on the
+       server - you never choose your own role) -->
+  <div id="project-picker-screen" class="screen hidden">
+    <div class="join-card wide">
+      <h1>Your projects</h1>
+      <p class="subtitle" id="pickerSubtitle"></p>
+
+      <div id="myProjectsList"></div>
+
+      <hr class="divider" />
+
+      <p class="subtitle">Not seeing your project? Create a new one - you'll automatically be its Lead.</p>
+      <label>Domain</label>
+      <select id="newProjectDomain">
+        <option value="corporate">Corporate (Project)</option>
+        <option value="education">Education (Course)</option>
+      </select>
+      <label>New project / course name</label>
+      <div class="inline-row">
+        <input id="newProjectName" type="text" placeholder="e.g. Alpha Team" />
+        <button id="createProjectBtn">Create</button>
+      </div>
+
+      <button id="switchUserBtnTop" class="link-btn">Sign in as someone else</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: DASHBOARD for the selected (project, resolved role) -->
+  <div id="dashboard-screen" class="screen hidden">
+    <div class="dash-wrap">
+      <header class="dash-header">
+        <div>
+          <h1>NinaivuNet AI - Dashboard</h1>
+          <span id="whoami" class="whoami"></span>
+        </div>
+        <div>
+          <a href="/" class="back-link">+ New meeting</a>
+          <button id="switchProjectBtn" class="link-btn">Switch project</button>
+          <button id="switchUserBtn" class="link-btn">Switch user</button>
+        </div>
+      </header>
+
+      <div class="search-row">
+        <input id="searchInput" type="text" placeholder="Search within this project's meetings..." />
+        <button id="searchBtn">Search</button>
+      </div>
+      <div id="searchResults"></div>
+
+      <div class="dash-columns">
+        <section class="meetings-col">
+          <h2>Meetings</h2>
+          <div id="meetingsList">Loading...</div>
+        </section>
+
+        <section class="detail-col">
+          <h2>Details</h2>
+          <div id="meetingDetail">
+            <p class="hint">Select a meeting on the left.</p>
+          </div>
+
+          <div id="ingestBox" class="ingest-box hidden">
+            <input id="ingestMeetingId" type="text" placeholder="Meeting ID to ingest (e.g. team-standup-01)" />
+            <button id="ingestBtn">Ingest into database</button>
+            <p class="hint">Run this after transcribe.py and llm_pipeline.py have produced output for that meeting.</p>
+          </div>
+
+          <div id="memberBox" class="ingest-box hidden">
+            <p class="hint" style="margin-top:0">Add a member to this project (Lead only):</p>
+            <input id="newMemberName" type="text" placeholder="Their name" />
+            <select id="newMemberRole">
+              <option value="member">Member</option>
+              <option value="lead">Lead</option>
+            </select>
+            <button id="addMemberBtn">Add to project</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

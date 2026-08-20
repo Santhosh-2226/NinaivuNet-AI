@@ -1,0 +1,22 @@
+{
+  "name": "ninaivunet-meeting-app",
+  "version": "1.0.0",
+  "description": "NinaivuNet AI - Real-time meeting app with per-participant audio capture",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "ioredis": "^5.11.1",
+    "multer": "^2.0.1",
+    "ngrok": "^5.0.0-beta.2",
+    "nodemailer": "^9.0.3",
+    "pino": "^10.3.1",
+    "socket.io": "^4.7.5",
+    "sqlite3": "^5.1.7",
+    "zod": "^4.4.3"
+  }
+}

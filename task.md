@@ -1,0 +1,22 @@
+# Tasks — Phase 7 & 8 Enterprise Intelligence Platform Upgrade
+
+- [x] Hierarchy & Enterprise Tenancy
+  - [x] Create MongoDB model `Organization.js`
+  - [x] Create MongoDB model `Department.js`
+  - [x] Update `Project.js` with department/organization links
+  - [x] Write `orgController.js` for CRUD endpoints
+  - [x] Write `orgRoutes.js` and register in `backend/server.js`
+  - [x] Update frontend project list creation form to optionally choose an Organization and Department
+  - [x] Render Org/Dept details inside `ProjectDetail.jsx` top banner
+- [x] Secure AI Gateway & Prompt Firewall
+  - [x] Create `aiGateway.js` service
+  - [x] Add PII regex filter (phone numbers, external emails, credit card tags)
+  - [x] Add Prompt Firewall filtering (keyword block list matching: "ignore instructions", "reveal secrets", "sudo", etc.)
+  - [x] Update `llm_pipeline.py` action item prompts to require JSON key schemas: `confidence`, `evidence`, `speaker`, `timestamp`
+  - [x] Integrate AI Gateway wrapper inside diagnostics and ingestion logic in meeting `server.js`
+- [x] Enterprise Organizational Intelligence
+  - [x] Build Decision Trace Graph inside `ProjectDetail.jsx` Decision Timeline
+  - [x] Render confidence meter badges on task items in details panel
+- [x] Collaboration & Automation Follow-ups (Phases 8-11)
+  - [x] Add **AI Follow-up Email Generator** button to summarize decisions & tasks into a formatted email
+  - [x] Add **AI Meeting Prep Advisor** button to analyze historical decisions/tasks/risks and output a briefing agenda

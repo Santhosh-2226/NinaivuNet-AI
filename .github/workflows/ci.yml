@@ -1,0 +1,76 @@
+name: NinaivuNet AI CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-verify:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Install Python pipeline test dependencies
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-mock requests openai faster-whisper python-dotenv
+
+      # Install root and backend dependencies
+      - name: Install Root Dependencies
+        run: npm ci
+
+      - name: Install Backend Dependencies
+        run: cd backend && npm ci
+
+      # Run Python unit tests
+      - name: Run Python Pipeline Tests
+        run: python -m pytest tests/test_pipeline.py
+
+      # Run Backend API Jest tests
+      - name: Run Backend Integration Tests
+        run: cd backend && npm test
+        env:
+          MONGODB_URI: mongodb://localhost:27017/visionsync
+          JWT_ACCESS_SECRET: test_jwt_access_secret_minimum_64_characters_long_for_security
+          JWT_REFRESH_SECRET: test_jwt_refresh_secret_minimum_64_characters_long_for_security
+
+      # Install and Run Playwright E2E tests
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run meeting server & frontend in background for E2E
+        run: |
+          node server.js &
+          cd backend && npm start &
+          sleep 5
+
+      - name: Run Playwright E2E Tests
+        run: npx playwright test
+        env:
+          NODE_ENV: test
